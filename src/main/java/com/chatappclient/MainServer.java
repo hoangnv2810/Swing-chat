@@ -91,7 +91,7 @@ public class MainServer extends JFrame {
 
                 start.setEnabled(false);
                 text.setText("Start server successful on port " + 8082);
-                text.setBackground(Color.green);
+                text.setForeground(Color.green);
             }
         });
     }

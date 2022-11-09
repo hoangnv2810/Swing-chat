@@ -1,32 +1,19 @@
 package com.chatappclient.view;
 
 import com.chatappclient.ReadThread;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.Receiver;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -35,7 +22,7 @@ import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-public class Home extends javax.swing.JFrame {
+public class HomeTest extends javax.swing.JFrame {
 
     private String username;
     private DataInputStream dis;
@@ -43,7 +30,7 @@ public class Home extends javax.swing.JFrame {
     private Socket socket;
     private Thread thread;
 
-    public Home() {
+    public HomeTest() {
         initComponents();
         jScrollPane1.getViewport().setMinimumSize(new Dimension(160, 300));
         jScrollPane1.getViewport().setPreferredSize(new Dimension(160, 300));
@@ -53,7 +40,7 @@ public class Home extends javax.swing.JFrame {
 
     }
 
-    public Home(Socket socket, String username, DataInputStream dis, DataOutputStream dos) throws IOException {
+    public HomeTest(Socket socket, String username, DataInputStream dis, DataOutputStream dos) throws IOException {
 
         initComponents();
         welcomeUserLable.setText("Xin chào: " + username);
@@ -96,11 +83,7 @@ public class Home extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(500, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -188,10 +171,8 @@ public class Home extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jLabel1.getAccessibleContext().setAccessibleName("labelIconSearchFriend");
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -234,7 +215,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addComponent(txtMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addGap(11, 11, 11)
                 .addComponent(sendLabel1)
                 .addContainerGap())
@@ -295,39 +276,15 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
-        try {
-            dos.writeUTF("Log out");
-            dos.flush();
-            if (dos != null) {
-                dos.close();
-            }
-            if (dis != null) {
-                dis.close();
-            }
-            if (socket != null) {
-                socket.close();
-            }
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
-    }//GEN-LAST:event_formWindowClosing
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        FormAddFriend fad = new FormAddFriend();
+        fad.show();
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         FormCreateGroup fcf = new FormCreateGroup();
         fcf.show();
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        FormAddFriend fad = new FormAddFriend();
-        fad.show();
-    }//GEN-LAST:event_jLabel1MouseClicked
 
     private void txtMessageFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMessageFocusGained
 
@@ -361,6 +318,24 @@ public class Home extends javax.swing.JFrame {
         txtMessage.setText("");
     }//GEN-LAST:event_sendLabel1MouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            dos.writeUTF("Log out");
+            dos.flush();
+            if (dos != null) {
+                dos.close();
+            }
+            if (dis != null) {
+                dis.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     public void insertMessage(String username, String message, SimpleAttributeSet attributeSet) {
         Document doc = chatBodyJPanel.getStyledDocument();
         String strMess = "[" + username + "]:";
@@ -368,7 +343,7 @@ public class Home extends javax.swing.JFrame {
             doc.insertString(doc.getLength(), strMess, attributeSet);
             doc.insertString(doc.getLength(), message + "\n", null);
         } catch (BadLocationException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }
@@ -381,8 +356,7 @@ public class Home extends javax.swing.JFrame {
         }
         System.out.println("ko vao");
     }
-    
-    
+
     public String getUsername() {
         return username;
     }
@@ -451,38 +425,6 @@ public class Home extends javax.swing.JFrame {
         return chatBodyJPanel;
     }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane chatBodyJPanel;
@@ -504,5 +446,4 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField txtMessage;
     private javax.swing.JLabel welcomeUserLable;
     // End of variables declaration//GEN-END:variables
-
 }

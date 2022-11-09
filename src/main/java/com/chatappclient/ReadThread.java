@@ -1,7 +1,7 @@
 package com.chatappclient;
 
 import com.chatappclient.model.MessagePrivate;
-import com.chatappclient.view.Home;
+import com.chatappclient.view.HomeTest;
 import com.chatappclient.view.Widget;
 import java.awt.Color;
 import java.io.DataInputStream;
@@ -23,10 +23,10 @@ import javax.swing.text.StyleConstants;
 public class ReadThread extends Thread {
 
     private Socket socket;
-    private Home home;
+    private HomeTest home;
 //    private Obj
 
-    public ReadThread(Socket socket, Home home) {
+    public ReadThread(Socket socket, HomeTest home) {
         try {
             this.socket = socket;
             this.home = home;

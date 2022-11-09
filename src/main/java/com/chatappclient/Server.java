@@ -2,7 +2,6 @@ package com.chatappclient;
 
 import com.chatappclient.model.MessagePrivate;
 import com.chatappclient.model.User;
-import com.chatappclient.view.Home;
 import java.awt.List;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -42,7 +41,6 @@ public class Server {
                 
                 DataInputStream dis = new DataInputStream(socket.getInputStream());
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 
                 String request = dis.readUTF();
                 String username = dis.readUTF();
@@ -236,9 +234,7 @@ class ClientHandler implements Runnable {
         return this.dos;
     }
 
-//    public ObjectOutputStream getOos() {
-//        return oos;
-//    }
+
 
     @Override
     public void run() {
@@ -315,6 +311,7 @@ class ClientHandler implements Runnable {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                break;
             }
 
         }

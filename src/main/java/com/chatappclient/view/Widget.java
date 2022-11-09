@@ -15,9 +15,9 @@ public class Widget extends javax.swing.JFrame {
     private String usernameReceiver;
     private String usernameSend;
     private DataOutputStream dos;
-    private Home home;
+    private HomeTest home;
 
-    public Widget(String usernameReceiver, String usernameSend, DataOutputStream dos,Home home) {
+    public Widget(String usernameReceiver, String usernameSend, DataOutputStream dos,HomeTest home) {
         initComponents();
         this.dos = dos;
         this.usernameSend = usernameSend;
