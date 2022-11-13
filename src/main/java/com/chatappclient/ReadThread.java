@@ -50,16 +50,22 @@ public class ReadThread extends Thread {
                 if (method.equals("Text")) {
                     String sender = home.getDis().readUTF();
                     String message = home.getDis().readUTF();
+                    String messPrivate = home.getDis().readUTF();
                     System.out.println("--------------Nhan tu Server------------");
-                    System.out.println(sender);
-                    System.out.println(message);
                     System.out.println("[" + sender + "]:" + message);
+                    System.out.println(messPrivate);
                     System.out.println("-----------------------------------------");
-                    SimpleAttributeSet attributeSet = new SimpleAttributeSet();
-                    StyleConstants.setBold(attributeSet, true);
-                    StyleConstants.setForeground(attributeSet, Color.RED);
+                    ArrayList<MessagePrivate> listMessagePrivates = new ArrayList<>();
+                    String ktmp[] = messPrivate.split(",");
+                    System.out.println(ktmp.length);
+                    for (int i = 0; i < ktmp.length; i += 4) {
+                        listMessagePrivates.add(new MessagePrivate(Integer.parseInt(ktmp[i]), ktmp[i + 3], ktmp[i + 1], ktmp[i + 2]));
+                        
+                    }
                     home.cleanChatBodyJTextPane(sender);
-                    home.insertMessage(sender, message, attributeSet);
+                    for(MessagePrivate ms:listMessagePrivates){
+                        home.loadMessage(ms.getUserSend(), ms.getUserReceive(), ms.getMessage());
+                    }
                 } else if (method.equals("Online users")) {
                     System.out.println(home.getUsername() + ": chu phong");
                     String[] users = home.getDis().readUTF().split(",");
@@ -84,9 +90,20 @@ public class ReadThread extends Thread {
 
                 } else if (method.equals("Message private between two user")) {
                     System.out.println("-------------Receive from server message private-------------");
-//                    String usersend = home.getDis().readUTF();
-//                    String userreceived = home.getDis().readUTF();
-//                    ArrayList<MessagePrivate> listMessagePrivates = new ArrayList<>();
+                    String usersend = home.getDis().readUTF();
+                    String userreceived = home.getDis().readUTF();
+                    String messPrivate = home.getDis().readUTF();
+                    System.out.println(messPrivate);
+                    ArrayList<MessagePrivate> listMessagePrivates = new ArrayList<>();
+                    String ktmp[] = messPrivate.split(",");
+                    System.out.println(ktmp.length);
+                    for (int i = 0; i < ktmp.length; i += 4) {
+                        listMessagePrivates.add(new MessagePrivate(Integer.parseInt(ktmp[i]), ktmp[i + 3], ktmp[i + 1], ktmp[i + 2]));
+                        
+                    }
+                    for(MessagePrivate ms:listMessagePrivates){
+                        home.loadMessage(ms.getUserSend(), ms.getUserReceive(), ms.getMessage());
+                    }
 
                     System.out.println("------------------------------------------------");
                 } else if (method.equals("Safe to leave")) {

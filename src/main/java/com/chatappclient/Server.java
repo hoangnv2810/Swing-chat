@@ -38,7 +38,7 @@ public class Server {
 
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected!");
-                
+
                 DataInputStream dis = new DataInputStream(socket.getInputStream());
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
@@ -234,8 +234,6 @@ class ClientHandler implements Runnable {
         return this.dos;
     }
 
-
-
     @Override
     public void run() {
         while (true) {
@@ -267,11 +265,20 @@ class ClientHandler implements Runnable {
                     for (ClientHandler client : Server.clientHandlers) {
                         if (client.getUsername().equals(receiver)) {
                             synchronized (lock) {
+                                MessagePrivateDAO messagePrivateDAO = new MessagePrivateDAO();
+                                ArrayList<MessagePrivate> listMessagePrivates = messagePrivateDAO.getAllMessagePrivate(usersend, receiver);
+                                UserDAO userDAO = new UserDAO();
+                                String messPrivate = "";
+                                for (MessagePrivate mp : listMessagePrivates) {
+                                    String tmp = mp.getId() + "," + userDAO.getUsername(Integer.parseInt(mp.getUserSend())) + "," + userDAO.getUsername(Integer.parseInt(mp.getUserReceive())) + "," + mp.getMessage() + ",";
+                                    messPrivate += tmp;
+                                }
                                 System.out.println("dda synch");
                                 System.out.println("--------Server gui di-----------");
                                 client.getDos().writeUTF("Text");
-                                client.getDos().writeUTF(this.username);
+                                client.getDos().writeUTF(usersend);
                                 client.getDos().writeUTF(content);
+                                client.getDos().writeUTF(messPrivate);
                                 client.getDos().flush();
                                 System.out.println(usersend);
                                 System.out.println(this.username);
@@ -282,26 +289,28 @@ class ClientHandler implements Runnable {
                         }
                     }
                 } else if (message.equals("Get all message private")) {
-                    String usersend = dis.readUTF();
+                    String userhost = dis.readUTF();
                     String userreceive = dis.readUTF();
                     for (ClientHandler client : Server.clientHandlers) {
-                        if (client.getUsername().equals(userreceive)) {
+                        if (client.getUsername().equals(userhost)) {
                             synchronized (lock) {
                                 MessagePrivateDAO messagePrivateDAO = new MessagePrivateDAO();
-                                ArrayList<MessagePrivate> listMessagePrivates = messagePrivateDAO.getAllMessagePrivate(usersend, userreceive);
+                                ArrayList<MessagePrivate> listMessagePrivates = messagePrivateDAO.getAllMessagePrivate(userhost, userreceive);
                                 System.out.println("--------Server get all message private send to client-----------");
-
+                                UserDAO userDAO = new UserDAO();
                                 client.getDos().writeUTF("Message private between two user");
-//                                for (MessagePrivate mp : listMessagePrivates) {
-//                                    System.out.println(mp.getId() + " " + mp.getUserSend() + " " + mp.getUserReceive() + " " + mp.getMessage() + " " + mp.getTimeCreated());
-//                                }
-                                client.getDos().writeUTF(usersend);
+                                String messPrivate = "";
+                                for (MessagePrivate mp : listMessagePrivates) {
+                                    String tmp = mp.getId() + "," + userDAO.getUsername(Integer.parseInt(mp.getUserSend())) + "," + userDAO.getUsername(Integer.parseInt(mp.getUserReceive())) + "," + mp.getMessage() + ",";
+                                    messPrivate += tmp;
+                                }
+                                client.getDos().writeUTF(userhost);
                                 client.getDos().writeUTF(userreceive);
-//                                client.getOos().writeObject(listMessagePrivates);
+                                client.getDos().writeUTF(messPrivate);
                                 client.getDos().flush();
-//                                client.getOos().flush();
-                                System.out.println("User send: " + usersend);
+                                System.out.println("User send: " + userhost);
                                 System.out.println("User receive: " + userreceive);
+                                System.out.println(messPrivate);
                                 System.out.println("-------------------------------");
                                 break;
                             }

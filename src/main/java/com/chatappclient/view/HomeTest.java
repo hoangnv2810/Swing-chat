@@ -337,9 +337,30 @@ public class HomeTest extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     public void insertMessage(String username, String message, SimpleAttributeSet attributeSet) {
+//        loadMessage(this.username, username, message);
         Document doc = chatBodyJPanel.getStyledDocument();
         String strMess = "[" + username + "]:";
         try {
+            doc.insertString(doc.getLength(), strMess, attributeSet);
+            doc.insertString(doc.getLength(), message + "\n", null);
+        } catch (BadLocationException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void loadMessage(String usersend, String userreceive, String message) {
+        Document doc = chatBodyJPanel.getStyledDocument();
+        String strMess = "[" + usersend + "]:";
+        SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+        StyleConstants.setBold(attributeSet, true);
+        if (username.equalsIgnoreCase(usersend)) {
+            StyleConstants.setForeground(attributeSet, Color.GREEN);
+        } else {
+            StyleConstants.setForeground(attributeSet, Color.red);
+        }
+        try {
+
             doc.insertString(doc.getLength(), strMess, attributeSet);
             doc.insertString(doc.getLength(), message + "\n", null);
         } catch (BadLocationException ex) {

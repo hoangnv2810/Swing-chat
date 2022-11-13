@@ -3,22 +3,20 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 
-public class MessagePrivate implements Serializable{
+public class MessagePrivate{
     private int id;
     private String message;
     private String userSend;
     private String userReceive;
-    private Timestamp timeCreated;
 
     public MessagePrivate() {
     }
 
-    public MessagePrivate(int id, String message, String userSend, String userReceive, Timestamp timeCreated) {
+    public MessagePrivate(int id, String message, String userSend, String userReceive) {
         this.id = id;
         this.message = message;
         this.userSend = userSend;
         this.userReceive = userReceive;
-        this.timeCreated = timeCreated;
     }
 
     public int getId() {
@@ -53,13 +51,7 @@ public class MessagePrivate implements Serializable{
         this.userReceive = userReceive;
     }
 
-    public Timestamp getTimeCreated() {
-        return timeCreated;
-    }
 
-    public void setTimeCreated(Timestamp timeCreated) {
-        this.timeCreated = timeCreated;
-    }
     
     
     

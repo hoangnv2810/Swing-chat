@@ -29,7 +29,7 @@ public class MessagePrivateDAO {
         Connection conn = dbc.getConnection();
         int idUserSend = getIDUser(usersend);
         int idUserReceive = getIDUser(userreceive);
-        String sql = "INSERT INTO chatapp.message_private (message, user_send, user_receive, time_created) VALUES ('" + message + "', " + idUserSend + "," + idUserReceive + "," + "DEFAULT);";
+        String sql = "INSERT INTO chatapp.message_private (message, user_send, user_receive) VALUES ('" + message + "', " + idUserSend + "," + idUserReceive + ");";
         Statement statement;
         try {
             statement = conn.createStatement();
@@ -50,7 +50,7 @@ public class MessagePrivateDAO {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()){
-                listMessagePrivates.add(new MessagePrivate(rs.getInt("id"), rs.getString("message"), rs.getString("user_send"), rs.getString("user_receive"), rs.getTimestamp("time_created")));
+                listMessagePrivates.add(new MessagePrivate(rs.getInt("id"), rs.getString("message"), rs.getString("user_send"), rs.getString("user_receive")));
                 
             }
 

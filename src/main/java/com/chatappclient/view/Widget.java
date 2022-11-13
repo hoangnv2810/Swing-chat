@@ -103,10 +103,10 @@ public class Widget extends javax.swing.JFrame {
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         jPanel1.setBackground(new Color(230, 230, 230));
-        if(!usernameLabel.getText().equalsIgnoreCase(home.getLbReceiver().getText())){
+//        if(!usernameLabel.getText().equalsIgnoreCase(home.getLbReceiver().getText())){
             home.setLbReceiver(usernameLabel.getText());
             home.getChatBodyJPanel().setText("");
-        }
+//        }
         try {
             dos.writeUTF("Get all message private");
             dos.writeUTF(home.getUsername());
