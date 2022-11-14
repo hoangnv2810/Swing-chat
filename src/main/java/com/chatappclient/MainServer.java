@@ -16,6 +16,10 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class MainServer extends JFrame {
 
@@ -37,7 +41,7 @@ public class MainServer extends JFrame {
     /**
      * Create the frame.
      */
-    public MainServer() {
+    public MainServer() throws UnknownHostException {
         setTitle("Chat server");
 
         setDefaultLookAndFeelDecorated(true);
@@ -51,6 +55,7 @@ public class MainServer extends JFrame {
         start.setFont(new Font("Times New Roman", Font.BOLD, 14));
 
         JPanel panel = new JPanel();
+        JTextField jTextField = new JTextField();
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
                 gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -70,9 +75,15 @@ public class MainServer extends JFrame {
                                 .addContainerGap())
         );
 
-        JLabel text = new JLabel("Click here to start server");
+        JLabel text = new JLabel("");
         text.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        
+        jTextField.setEditable(false);
+        Inet4Address ip = (Inet4Address) Inet4Address.getLocalHost();
+        jTextField.setText("IP Server: " + ip.getHostAddress());
+        
         panel.add(text);
+        panel.add(jTextField);
         contentPane.setLayout(gl_contentPane);
 
         start.addActionListener(new ActionListener() {
